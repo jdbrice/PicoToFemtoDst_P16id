@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<Task name="FemtoDstWriter" type="FemtoDstWriter" config="" nodePath="FDW" />
+
+	<FDW>
+		<EventLoop progress="true" />
+		<input>
+			<dst treeName="PicoDst" url="./list.lis" splitBy="150" maxFiles="3" nEvents="-1"/>
+		</input>
+
+		<output>
+			<TFile url="out/FemotDst_{jobIndex}.root" />
+		</output>
+
+		<histograms>
+			<Histo type="F" name="events" title="Events; Cut; # Events" bins_x="bins.EventCuts" />
+
+			<Histo type="F" name="vtx_z" title=";z vertex (cm); dN/dvz (cm)^{-1}" bins_x="bins.vz" />
+			<Histo type="F" name="delta_z" title=";vpd z - z vertex (cm); dN/dvzdiff (cm)^{-1}" bins_x="bins.dvz" />
+
+			<Histo type="F" name="pass_vtx_z" title=";z vertex (cm); dN/dvz (cm)^{-1}" bins_x="bins.vz" />
+			<Histo type="F" name="pass_delta_z" title=";vpd z - z vertex (cm); dN/dvzdiff (cm)^{-1}" bins_x="bins.dvz" />
+		</histograms>
+	</FDW>
+
+	<EventCutLabels>All, Trigger, vtx, vtx_delta</EventCuts>
+	<bins>
+		<vz width="0.1" min="-150" max="150" />
+		<dvz width="0.1" min="-50" max="50" />
+		<!-- <EventCuts width="1" min="0" max="10"/> -->
+		<EventCuts type="l">All, Trigger, vtx, vtx_delta, gte1_mtd, gte2_mtd</EventCuts>
+	</bins>
+</config>

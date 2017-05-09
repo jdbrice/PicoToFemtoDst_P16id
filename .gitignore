@@ -1,0 +1,47 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+*.dblite
+
+modules/StarClassLibrary/CVS/
+
+modules/PicoDstSL16cMtd/DictionaryPicoDstSL16cMTD\.cpp
+
+*.pcm
+
+*.root
+
+*.log
+
+bin/list\.lis
+
+modules/PicoDstP16id/DictionaryPicoDstP16id\.cpp
+
+modules/PicoDstP16id/DictionaryPicoDstP16id\.h

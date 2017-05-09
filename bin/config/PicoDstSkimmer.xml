@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<Task name="PicoDstSkimmer" type="PicoDstSkimmer" config="" nodePath="PDS" />
+
+	<PDS>
+		<EventLoop progress="true" />
+		<input>
+			<dst treeName="PicoDst" url="./list.lis" splitBy="5" maxFiles="-1"/>
+		</input>
+
+		<output>
+			<TFile url="FemotDst.root" />
+		</output>
+	</PDS>
+</config>
