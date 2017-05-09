@@ -1,2 +1,2 @@
-# PicoToFemtoDst_SL16cMTD
-Produces FemtoDsts from Rongrong's MTD flavor SL16c PicoDsts
+# PicoToFemtoDstP16id
+Produces FemtoDsts from Run14 AuAu 200 GeV P16id PicoDsts
