@@ -13,6 +13,7 @@
 #include "FemtoDstFormat/FemtoTrack.h"
 #include "FemtoDstFormat/FemtoMtdPidTraits.h"
 #include "FemtoDstFormat/FemtoBTofPidTraits.h"
+#include "FemtoDstFormat/FemtoTrackHelix.h"
 
 #include "StRefMultCorr/StRefMultCorr.h"
 #include "StRefMultCorr/CentralityMaker.h"
@@ -31,9 +32,11 @@ protected:
 	TClonesArrayWriter<FemtoTrack> _wTrack;
 	TClonesArrayWriter<FemtoMtdPidTraits> _wMtdPid;
 	TClonesArrayWriter<FemtoBTofPidTraits> _wBTofPid;
+	TClonesArrayWriter<FemtoTrackHelix>    _wHelix;
 	FemtoTrack _track;
 	FemtoMtdPidTraits _mtdPid;
 	FemtoBTofPidTraits _btofPid;
+	FemtoTrackHelix _helix;
 
 	StRefMultCorr *rmc = nullptr;
 
@@ -51,6 +54,7 @@ public:
 		_wTrack.createBranch( tree, "Tracks" );
 		_wMtdPid.createBranch( tree, "MtdPidTraits" );
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
+		_wHelix.createBranch( tree, "Helices" );
 
 		rmc = CentralityMaker::instance()->getgRefMultCorr();
 
@@ -125,6 +129,7 @@ protected:
 		_wTrack.reset();
 		_wMtdPid.reset();
 		_wBTofPid.reset();
+		_wHelix.reset();
 		size_t nTracks = _rTrack.N();
 		size_t nMtdTracks = 0;
 		for ( size_t i = 0; i < nTracks; i++ ){
@@ -134,6 +139,7 @@ protected:
 			if ( fabs(_track.mPt) > 0.01 ){
 				
 				_wTrack.add( _track );
+				_wHelix.add( _helix );
 				if ( _track.mMtdPidTraitsIndex >= 0 ){
 					_wMtdPid.add( _mtdPid );
 					nMtdTracks++;
@@ -141,11 +147,8 @@ protected:
 
 				if ( _track.mBTofPidTraitsIndex >= 0 )
 					_wBTofPid.add( _btofPid );
-
-				
-				// nMtdTracks++;
-			}
-		}
+			}// mPt > 0.01
+		} // loop on tracks
 
 		if ( nMtdTracks >= 1 )
 			book->fill( "events", "gte1_mtd" );
@@ -178,6 +181,9 @@ protected:
 		// _track.gDCA( track->dca() );
 
 		_track.dEdx( track->dEdx() );
+
+
+		fillTrackHelix( i, track );
 
 		if ( track->mtdPidTraitsIndex() >= 0 ){
 			fillMtdPid( i, track );
@@ -229,6 +235,22 @@ protected:
 		size_t index = _wBTofPid.N();
 		_track.mBTofPidTraitsIndex = index;
 
+	}
+
+	virtual void fillTrackHelix( size_t i, StPicoTrack *track ){
+		_helix.reset();
+
+		_helix.mPar[0] = track->params()[0];
+		_helix.mPar[1] = track->params()[1];
+		_helix.mPar[2] = track->params()[2];
+		_helix.mPar[3] = track->params()[3];
+		_helix.mPar[4] = track->params()[4];
+		_helix.mPar[5] = track->params()[5];
+		_helix.mMap0 = track->map0();
+		_helix.mMap1 = track->map1();
+
+		size_t index = _wHelix.N();
+		_track.mHelixIndex = index;
 	}
 
 };
