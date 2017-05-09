@@ -40,6 +40,9 @@ protected:
 
 	StRefMultCorr *rmc = nullptr;
 
+	int nMtd = 0;
+	int nBTof = 0;
+
 public:
 	virtual const char* classname() const { return "FemtoDstWriter"; }
 	FemtoDstWriter() {}
@@ -57,6 +60,9 @@ public:
 		_wHelix.createBranch( tree, "Helices" );
 
 		rmc = CentralityMaker::instance()->getgRefMultCorr();
+
+		nMtd = config.getInt( nodePath + ":nMtd", false );
+		nBTof = config.getInt( nodePath + ":nBTof", false );
 
 	}
 protected:	
@@ -132,6 +138,7 @@ protected:
 		_wHelix.reset();
 		size_t nTracks = _rTrack.N();
 		size_t nMtdTracks = 0;
+		size_t nBTofTracks = 0;
 		for ( size_t i = 0; i < nTracks; i++ ){
 			StPicoTrack * track = _rTrack.get( i );
 
@@ -145,8 +152,10 @@ protected:
 					nMtdTracks++;
 				}
 
-				if ( _track.mBTofPidTraitsIndex >= 0 )
+				if ( _track.mBTofPidTraitsIndex >= 0 ){
+					nBTofTracks++;
 					_wBTofPid.add( _btofPid );
+				}
 			}// mPt > 0.01
 		} // loop on tracks
 
@@ -155,6 +164,10 @@ protected:
 		if ( nMtdTracks >= 2 )
 			book->fill( "events", "gte2_mtd" );
 
+		if ( nMtdTracks < nMtd )
+			return ;
+		if ( nBTofTracks <  nBTof )
+			return ;
 
 		tree->Fill();
 	}

@@ -2,10 +2,10 @@
 <config>
 	<Task name="FemtoDstWriter" type="FemtoDstWriter" config="" nodePath="FDW" />
 
-	<FDW>
+	<FDW nMtd="0" nBTof="0">
 		<EventLoop progress="true" />
 		<input>
-			<dst treeName="PicoDst" url="./list.lis" splitBy="5" maxFiles="-1" nEvents="-1"/>
+			<dst treeName="PicoDst" url="./list.lis" splitBy="50" maxFiles="-1" nEvents="-1"/>
 		</input>
 
 		<output>
