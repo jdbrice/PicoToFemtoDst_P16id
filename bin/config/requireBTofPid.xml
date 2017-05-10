@@ -5,7 +5,7 @@
 	<FDW>
 		<EventLoop progress="true" />
 
-		<Require mtd="false" btof="true" max_pT="0.5">
+		<Require mtd="false" btof="true" max_pT="0.5"/>
 		<input>
 			<dst treeName="PicoDst" url="./list.lis" splitBy="5" maxFiles="-1" nEvents="-1"/>
 		</input>
