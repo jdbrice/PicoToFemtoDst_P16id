@@ -41,7 +41,7 @@ protected:
 	StRefMultCorr *rmc = nullptr;
 
 	bool require_mtdPid = false;
-	bool require_btofPid = false
+	bool require_btofPid = false;
 	double max_pT = 1000;
 
 public:
@@ -174,11 +174,6 @@ protected:
 			book->fill( "events", "gte1_mtd" );
 		if ( nMtdTracks >= 2 )
 			book->fill( "events", "gte2_mtd" );
-
-		if ( nMtdTracks < nMtd )
-			return ;
-		if ( nBTofTracks <  nBTof )
-			return ;
 
 		tree->Fill();
 	}
