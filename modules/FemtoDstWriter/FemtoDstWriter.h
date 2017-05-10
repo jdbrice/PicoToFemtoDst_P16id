@@ -62,8 +62,8 @@ public:
 
 		rmc = CentralityMaker::instance()->getgRefMultCorr();
 
-		require_mtdPid = config.getInt( nodePath + ".Require:mtd", false );
-		require_btofPid = config.getInt( nodePath + ".Require:btof", false );
+		require_mtdPid = config.getBool( nodePath + ".Require:mtd", false );
+		require_btofPid = config.getBool( nodePath + ".Require:btof", false );
 		max_pT = config.getDouble( nodePath + ".Require:max_pT", max_pT );
 
 	}
@@ -154,7 +154,7 @@ protected:
 				
 
 				if ( require_mtdPid  && _track.mMtdPidTraitsIndex < 0 ) continue;
-				if ( require_btofPid && _track.mBTofPidTraitsIndex < 0 ) continue;
+				if ( require_btofPid && _track.mBTofPidTraitsIndex < 0 ) {continue;}
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
