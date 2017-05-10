@@ -40,8 +40,8 @@ protected:
 
 	StRefMultCorr *rmc = nullptr;
 
-	int nMtd = 0;
-	int nBTof = 0;
+	bool require_mtdPid = false;
+	bool require_btofPid = false
 	double max_pT = 1000;
 
 public:
@@ -62,9 +62,9 @@ public:
 
 		rmc = CentralityMaker::instance()->getgRefMultCorr();
 
-		nMtd = config.getInt( nodePath + ":nMtd", false );
-		nBTof = config.getInt( nodePath + ":nBTof", false );
-		max_pT = config.getDouble( nodePath + ":max_pT", max_pT );
+		require_mtdPid = config.getInt( nodePath + ".Require:mtd", false );
+		require_btofPid = config.getInt( nodePath + ".Require:btof", false );
+		max_pT = config.getDouble( nodePath + ".Require:max_pT", max_pT );
 
 	}
 protected:	
@@ -152,6 +152,10 @@ protected:
 			fillTrack( nMtdTracks, track, event );
 			if ( fabs(_track.mPt) > 0.01 && fabs(_track.mPt) < max_pT ){
 				
+
+				if ( require_mtdPid  && _track.mMtdPidTraitsIndex < 0 ) continue;
+				if ( require_btofPid && _track.mBTofPidTraitsIndex < 0 ) continue;
+
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
 				if ( _track.mMtdPidTraitsIndex >= 0 ){
