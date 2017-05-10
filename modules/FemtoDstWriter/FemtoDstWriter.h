@@ -42,6 +42,7 @@ protected:
 
 	int nMtd = 0;
 	int nBTof = 0;
+	double max_pT = 1000;
 
 public:
 	virtual const char* classname() const { return "FemtoDstWriter"; }
@@ -63,6 +64,7 @@ public:
 
 		nMtd = config.getInt( nodePath + ":nMtd", false );
 		nBTof = config.getInt( nodePath + ":nBTof", false );
+		max_pT = config.getDouble( nodePath + ":max_pT", max_pT );
 
 	}
 protected:	
@@ -99,6 +101,11 @@ protected:
 		if ( fabs(deltaVz) > 3.0 )
 			return false;
 		book->fill( "events", "vtx_delta" );
+
+
+		if ( rmc->getCentralityBin16() < 0 || rmc->getCentralityBin16() > 16 )
+			return false;
+		book->fill( "events", "cent80" );
 
 
 		book->fill( "pass_vtx_z", vtx.z() );
@@ -143,7 +150,7 @@ protected:
 			StPicoTrack * track = _rTrack.get( i );
 
 			fillTrack( nMtdTracks, track );
-			if ( fabs(_track.mPt) > 0.01 ){
+			if ( fabs(_track.mPt) > 0.01 && fabs(_track.mPt) < max_pT ){
 				
 				_wTrack.add( _track );
 				_wHelix.add( _helix );

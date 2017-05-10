@@ -2,10 +2,10 @@
 <config>
 	<Task name="FemtoDstWriter" type="FemtoDstWriter" config="" nodePath="FDW" />
 
-	<FDW nMtd="0" nBTof="0">
+	<FDW nMtd="0" nBTof="2" max_pT="0.5" >
 		<EventLoop progress="true" />
 		<input>
-			<dst treeName="PicoDst" url="./list.lis" splitBy="50" maxFiles="-1" nEvents="-1"/>
+			<dst treeName="PicoDst" url="./list.lis" splitBy="5" maxFiles="-1" nEvents="-1"/>
 		</input>
 
 		<output>
@@ -28,6 +28,6 @@
 		<vz width="0.1" min="-150" max="150" />
 		<dvz width="0.1" min="-50" max="50" />
 		<!-- <EventCuts width="1" min="0" max="10"/> -->
-		<EventCuts type="l">All, Trigger, vtx, vtx_delta, gte1_mtd, gte2_mtd</EventCuts>
+		<EventCuts type="l">All, Trigger, vtx, vtx_delta, cent80, gte1_mtd, gte2_mtd</EventCuts>
 	</bins>
 </config>
