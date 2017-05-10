@@ -59,6 +59,9 @@ class StPicoTrack : public TObject {
   const Float_t* errMatrix() const;
 
   StDcaGeometry dcaGeometry() const;
+  /*************************** DANIEL ADDED ********************************/
+  double globalDCA( double magField, StThreeVectorF vtx );
+  /*************************** DANIEL ADDED ********************************/
   StPhysicalHelixD helix() const;
   bool isHFTTrack() const;
 
@@ -124,6 +127,20 @@ inline StPhysicalHelixD StPicoTrack::helix() const { return dcaGeometry().helix(
 inline Int_t   StPicoTrack::emcPidTraitsIndex() const  { return (Int_t)mEmcPidTraitsIndex; }
 inline Int_t   StPicoTrack::bTofPidTraitsIndex() const { return (Int_t)mBTofPidTraitsIndex; }
 inline Int_t   StPicoTrack::mtdPidTraitsIndex() const  { return (Int_t)mMtdPidTraitsIndex; }
+/*************************** DANIEL ADDED ********************************/
+inline double StPicoTrack::globalDCA( double m, StThreeVectorF vtx ){
+    StDcaGeometry dcaGeom = dcaGeometry();
+    StPhysicalHelixD gHelix = dcaGeom.helix();
+    gHelix.moveOrigin( gHelix.pathLength(vtx) );
+
+    StThreeVectorF origin = gHelix.origin();
+    StThreeVectorF HMom   = gHelix.momentum( m * kilogauss); // taken from PicoEvent
+
+    StThreeVectorF diff   = origin - vtx;
+    Float_t gdca = diff.mag();
+    return gdca;
+}
+/*************************** DANIEL ADDED ********************************/
 
 inline bool StPicoTrack::isHFTTrack() const
 {

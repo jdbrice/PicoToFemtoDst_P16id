@@ -149,7 +149,7 @@ protected:
 		for ( size_t i = 0; i < nTracks; i++ ){
 			StPicoTrack * track = _rTrack.get( i );
 
-			fillTrack( nMtdTracks, track );
+			fillTrack( nMtdTracks, track, event );
 			if ( fabs(_track.mPt) > 0.01 && fabs(_track.mPt) < max_pT ){
 				
 				_wTrack.add( _track );
@@ -179,7 +179,7 @@ protected:
 		tree->Fill();
 	}
 
-	virtual void fillTrack( size_t i, StPicoTrack *track ){
+	virtual void fillTrack( size_t i, StPicoTrack *track, StPicoEvent *event ){
 		// LOG_F( INFO, "Filling %lu", i );
 		_track.reset();
 
@@ -198,12 +198,13 @@ protected:
 		_track.nSigmaKaon     ( track->nSigmaKaon     ( ) );
 		_track.nSigmaProton   ( track->nSigmaProton   ( ) );
 
-		// _track.gDCA( track->dca() );
+		double dca_full_prec = track->globalDCA( event->bField(), event->primaryVertex() );
+		_track.gDCA( dca_full_prec );
 
 		_track.dEdx( track->dEdx() );
 
 
-		fillTrackHelix( i, track );
+		fillTrackHelix( i, track, dca_full_prec );
 
 		if ( track->mtdPidTraitsIndex() >= 0 ){
 			fillMtdPid( i, track );
@@ -257,7 +258,7 @@ protected:
 
 	}
 
-	virtual void fillTrackHelix( size_t i, StPicoTrack *track ){
+	virtual void fillTrackHelix( size_t i, StPicoTrack *track, double dca ){
 		_helix.reset();
 
 		_helix.mPar[0] = track->params()[0];
@@ -268,6 +269,7 @@ protected:
 		_helix.mPar[5] = track->params()[5];
 		_helix.mMap0 = track->map0();
 		_helix.mMap1 = track->map1();
+		_helix.mDCA = dca;
 
 		size_t index = _wHelix.N();
 		_track.mHelixIndex = index;
