@@ -1,6 +1,0 @@
-cxxFlags 		= ['-std=c++11' ]
-
-env = Environment()
-env.Append(CXXFLAGS 		= cxxFlags)
-
-env.Object( "RunMapFactory.cpp" )
