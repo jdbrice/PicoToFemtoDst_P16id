@@ -1,0 +1,7 @@
+import os
+cxxFlags 		= ['-std=c++11' ]
+
+env = Environment(ENV = os.environ)
+env.Append(CXXFLAGS 		= cxxFlags)
+
+env.Object( "RunMapFactory.cpp" )

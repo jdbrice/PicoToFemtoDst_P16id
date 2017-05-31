@@ -1,0 +1,21 @@
+<job maxFilesPerProcess="50" filesPerHour="200" >
+	<command>
+		./femtoMaker.app config/requireMtdPid.xml --index=$JOBINDEX --FDW.input.dst:url=$FILELIST
+	</command>
+
+	<stdout URL="file:/global/homes/j/jdb12/work/PicoToFemtoDst_P16id/bin/out/log/$JOBID.out" />
+	<stderr URL="file:/global/homes/j/jdb12/work/PicoToFemtoDst_P16id/bin/out/log/$JOBID.err" />
+	
+	<input URL="filelist:/global/homes/j/jdb12/work/PicoToFemtoDst_P16id/bin/list.lis" />
+		<output fromScratch="*.root" toURL="file:/global/homes/j/jdb12/work/PicoToFemtoDst_P16id/bin/out/"/>
+	<SandBox>
+ 		<Package>
+ 			<File>file:./femtoMaker.app</File>
+ 			<File>file:./config/</File>
+ 		</Package> 
+ 	</SandBox>
+
+	<Generator> 
+ 		<Location>/global/homes/j/jdb12/work/PicoToFemtoDst_P16id/bin/out/gen</Location> 
+ 	</Generator> 
+</job>

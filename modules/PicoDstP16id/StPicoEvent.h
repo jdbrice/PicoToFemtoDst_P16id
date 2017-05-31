@@ -4,7 +4,7 @@
 #include <vector>
 #include "TObject.h"
 #include "StThreeVectorF.hh"
-
+#include <algorithm>
 class StMuDst;
 
 class StPicoEvent : public TObject {

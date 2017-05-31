@@ -38,16 +38,17 @@ java_library_message = '%sCreating Java Archive %s==> %s$TARGET%s' % \
    (colors['red'], colors['purple'], colors['yellow'], colors['end'])
 
 env = Environment(
-  CXXCOMSTR = compile_source_message,
-  CCCOMSTR = compile_source_message,
-  SHCCCOMSTR = compile_shared_source_message,
-  SHCXXCOMSTR = compile_shared_source_message,
-  ARCOMSTR = link_library_message,
-  RANLIBCOMSTR = ranlib_library_message,
-  SHLINKCOMSTR = link_shared_library_message,
-  LINKCOMSTR = link_program_message,
-  JARCOMSTR = java_library_message,
-  JAVACCOMSTR = compile_source_message
+  ENV = os.environ,
+  # CXXCOMSTR = compile_source_message,
+  # CCCOMSTR = compile_source_message,
+  # SHCCCOMSTR = compile_shared_source_message,
+  # SHCXXCOMSTR = compile_shared_source_message,
+  # ARCOMSTR = link_library_message,
+  # RANLIBCOMSTR = ranlib_library_message,
+  # SHLINKCOMSTR = link_shared_library_message,
+  # LINKCOMSTR = link_program_message,
+  # JARCOMSTR = java_library_message,
+  # JAVACCOMSTR = compile_source_message
 )
 
 env['ENV']['TERM'] = os.environ['TERM']

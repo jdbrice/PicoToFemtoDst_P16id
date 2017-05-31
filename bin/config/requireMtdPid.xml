@@ -11,7 +11,7 @@
 		</input>
 
 		<output>
-			<TFile url="out/FemotDst_mtd_{jobIndex}.root" />
+			<TFile url="FemotDst_mtd_{index}.root" />
 		</output>
 
 		<histograms>
