@@ -652,13 +652,13 @@ void StRefMultCorr::readBadRuns()
   for(Int_t i=0; i<5; i++) {
     cout << "StRefMultCorr::readBadRuns  For " << mName << ": open " << flush ;
     const Int_t year = 2010 + i ;
-    Char_t* inputFileName(Form("StRoot/StRefMultCorr/bad_runs_refmult_year%d.txt", year));
+    Char_t* inputFileName(Form("config/bad_runs_refmult_year%d.txt", year));
     if(mName.CompareTo("grefmult_P16id", TString::kIgnoreCase) == 0) //read bad runs for VPDMB5
-        sprintf(inputFileName,"StRoot/StRefMultCorr/bad_runs_refmult_year%d_P16id.txt",year);
+        sprintf(inputFileName,"config/bad_runs_refmult_year%d_P16id.txt",year);
     else if(mName.CompareTo("grefmult_VpdMB30", TString::kIgnoreCase) == 0) //read bad runs for VPDMB30
-        sprintf(inputFileName,"StRoot/StRefMultCorr/bad_runs_refmult_year%d_VpdMB30.txt",year);
+        sprintf(inputFileName,"config/bad_runs_refmult_year%d_VpdMB30.txt",year);
     else if(mName.CompareTo("grefmult_VpdMBnoVtx", TString::kIgnoreCase) == 0) //read bad runs for VPDMB-noVtx
-        sprintf(inputFileName,"StRoot/StRefMultCorr/bad_runs_refmult_year%d_VpdMBnoVtx.txt",year);
+        sprintf(inputFileName,"config/bad_runs_refmult_year%d_VpdMBnoVtx.txt",year);
     else
         ;//
     cout << "bad run file: " << inputFileName << endl;
