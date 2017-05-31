@@ -42,6 +42,7 @@ protected:
 
 	bool require_mtdPid = false;
 	bool require_btofPid = false;
+
 	double max_pT = 1000;
 
 public:
@@ -169,7 +170,7 @@ protected:
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
-				if ( _track.mMtdPidTraitsIndex >= 0 ){
+				if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
 					_wMtdPid.add( _mtdPid );
 					nMtdTracks++;
 				}
