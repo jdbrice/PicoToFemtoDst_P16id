@@ -1,6 +1,9 @@
 //------------------------------------------------------------------------------
-// $Id: StRefMultCorr.h,v 1.8 2013/05/10 18:33:33 hmasui Exp $
+// $Id: StRefMultCorr.h,v 1.9 2015/05/22 06:52:07 hmasui Exp $
 // $Log: StRefMultCorr.h,v $
+// Revision 1.9  2015/05/22 06:52:07  hmasui
+// Add grefmult for Run14 Au+Au 200 GeV
+//
 // Revision 1.8  2013/05/10 18:33:33  hmasui
 // Add TOF tray mult, preliminary update for Run12 U+U
 //
@@ -64,11 +67,9 @@
 #include <map>
 #include "TString.h"
 
-
-
 //______________________________________________________________________________
 // Class to correct z-vertex dependence, luminosity dependence of multiplicity
-class StRefMultCorr  {
+class StRefMultCorr {
   public:
     // Specify the type of multiplicity (default is refmult)
     // "refmult"   - reference multiplicity defined in |eta|<0.5
@@ -113,8 +114,6 @@ class StRefMultCorr  {
     // Read scale factor from text file
     void setVzForWeight(const Int_t nbin, const Double_t min, const Double_t max) ;
     void readScaleForWeight(const Char_t* input) ;
-    // tmp
-    Double_t get(const Int_t i, const Int_t j) const ;
 
     // Return begin/end run from energy and year
     Int_t getBeginRun(const Double_t energy, const Int_t year) ;

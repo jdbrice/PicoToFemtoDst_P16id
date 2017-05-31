@@ -60,7 +60,18 @@ public:
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
 		_wHelix.createBranch( tree, "Helices" );
 
-		rmc = CentralityMaker::instance()->getgRefMultCorr();
+
+		if ( "P16id" == config[nodePath + ".Require:rmc"] ){
+			LOG_F( INFO, "Using RefMultCorr for P16id" );
+			rmc = CentralityMaker::instance()->getgRefMultCorr_P16id();
+			rmc->init(15075008);
+			rmc->setVzForWeight(6, -6.0, 6.0);
+			rmc->readScaleForWeight("config/weight_grefmult_vpd30_vpd5_Run14_P16id.txt");
+		} else {
+			LOG_F( INFO, "Using RefMultCorr for MTD (P16id)" );
+			rmc = CentralityMaker::instance()->getgRefMultCorr_VpdMBnoVtx();
+		}
+		
 
 		require_mtdPid = config.getBool( nodePath + ".Require:mtd", false );
 		require_btofPid = config.getBool( nodePath + ".Require:btof", false );

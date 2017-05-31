@@ -5,13 +5,13 @@
 	<FDW>
 		<EventLoop progress="true" />
 
-		<Require mtd="false" btof="true" max_pT="0.8"/>
+		<Require mtd="false" btof="true" rmc="P16id" />
 		<input>
 			<dst treeName="PicoDst" url="./list.lis" splitBy="20" maxFiles="-1" nEvents="-1"/>
 		</input>
 
 		<output>
-			<TFile url="out/FemotDst_btof_{jobIndex}.root" />
+			<TFile url="out/FemotDst_btof_{index}.root" />
 		</output>
 
 		<histograms>
