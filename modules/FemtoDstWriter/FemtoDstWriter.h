@@ -170,10 +170,10 @@ protected:
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
-				// if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
-				// 	_wMtdPid.add( _mtdPid );
-				// 	nMtdTracks++;
-				// }
+				if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
+					_wMtdPid.add( _mtdPid );
+					nMtdTracks++;
+				}
 
 				if ( _track.mBTofPidTraitsIndex >= 0 ){
 					nBTofTracks++;
