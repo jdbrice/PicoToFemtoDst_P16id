@@ -148,16 +148,16 @@ protected:
 		_event.mRunId    = event->runId();
 		_event.mRunIndex = rmf.indexForRun( _event.mRunId );
 		_event.mEventId  = event->eventId();
-		// _event.mTriggerWordMtd = event->triggerWordMtd();
+		_event.mTriggerWord = makeTriggerWord( event );
 		_event.mGRefMult = event->grefMult();
 		_event.mBin16 = rmc->getCentralityBin16();
 		_event.mWeight = rmc->getWeight();
 
-		for ( auto t : event->triggerIds()  ){
+		// for ( auto t : event->triggerIds()  ){
 
-			// LOG_F( INFO, "Trigger ID: %lu", t );
-			triggerIds.insert( t );
-		}
+		// 	// LOG_F( INFO, "Trigger ID: %lu", t );
+		// 	triggerIds.insert( t );
+		// }
 
 		_wEvent.set( _event );
 
@@ -301,6 +301,56 @@ protected:
 		for ( auto t : triggerIds ){
 			LOG_F( INFO, "triggerId : %lu", t );
 		}
+	}
+
+
+	unsigned int makeTriggerWord( StPicoEvent * event ){
+		unsigned int word = 0;
+
+		for ( auto t : event->triggerIds()  ){
+			if ( 450201 == t || 450211 == t || 450202 == t || 450212 == t || 450010 == t || 450020 == t ){
+				// VPDMB-30 (with BHT triggers)
+				word |= (1 << 0); 
+			}
+
+			if ( 450008 == t || 450018 == t || 450014 == t || 450024 == t || 450005 == t || 450015 == t || 450025 == t || 450050 == t || 450060 == t || 450009 == t){
+				//VPDMB-5
+				//VPDMB-5-nobsmd
+				//VPDMB-5-p-nobsmd
+				//VPDMB-5-p-nobsmd-hlt
+				//VPDMB-5-p-nobsmd-ssd-hlt
+				word |= (1 << 1); 
+			}
+
+			if ( 450012 == t || 450022 == t ){
+				//ZDC-MON
+				word |= (1 << 2); 
+			}
+
+			if ( 450103 == t ){
+				// Central-5
+				word |= (1 << 3); 
+			}
+
+			if ( 450601 == t || 450611 == t || 450621 == t || 450631 == t || 450641 == t ){
+				// dimuon
+				word |= (1 << 4); 
+			}
+			if ( 450604 == t || 450605 == t || 450606 == t ){
+				// dimuon-5-hft
+				word |= (1 << 5); 
+			}
+			if ( 450011 == t || 450021 == t ){
+				// MB-mon
+				word |= (1 << 6); 
+			}
+			if ( 450013 == t || 450023 == t){
+				//VPD-ZDC-novtx-mon
+				word |= (1 << 7); 
+			}
+		}
+
+		return word;
 	}
 
 };
