@@ -57,7 +57,7 @@ public:
 		tree = new TTree( "FemtoDst", "FemtoDst" );
 		_wEvent.createBranch( tree, "Event" );
 		_wTrack.createBranch( tree, "Tracks" );
-		_wMtdPid.createBranch( tree, "MtdPidTraits" );
+		// _wMtdPid.createBranch( tree, "MtdPidTraits" );
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
 		_wHelix.createBranch( tree, "Helices" );
 
