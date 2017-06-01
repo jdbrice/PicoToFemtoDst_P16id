@@ -152,7 +152,7 @@ protected:
 		_wEvent.set( _event );
 
 		_wTrack.reset();
-		// _wMtdPid.reset();
+		_wMtdPid.reset();
 		_wBTofPid.reset();
 		_wHelix.reset();
 		size_t nTracks = _rTrack.N();
