@@ -21,6 +21,8 @@
 #include "TTree.h"
 #include "TAxis.h"
 
+#include <set>
+
 class FemtoDstWriter : public PicoDstSkimmer
 {
 protected:
@@ -44,6 +46,8 @@ protected:
 	bool require_btofPid = false;
 
 	double max_pT = 1000;
+
+	std::set<unsigned int> triggerIds;
 
 public:
 	virtual const char* classname() const { return "FemtoDstWriter"; }
@@ -151,7 +155,8 @@ protected:
 
 		for ( auto t : event->triggerIds()  ){
 
-			LOG_F( INFO, "Trigger ID: %lu", t );
+			// LOG_F( INFO, "Trigger ID: %lu", t );
+			triggerIds.insert( t );
 		}
 
 		_wEvent.set( _event );
@@ -289,6 +294,13 @@ protected:
 
 		size_t index = _wHelix.N();
 		_track.mHelixIndex = index;
+	}
+
+
+	virtual void postEventLoop(){
+		for ( auto t : triggerIds ){
+			LOG_F( INFO, "triggerId : %lu", t );
+		}
 	}
 
 };
