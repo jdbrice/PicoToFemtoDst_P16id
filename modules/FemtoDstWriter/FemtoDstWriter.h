@@ -57,7 +57,7 @@ public:
 		tree = new TTree( "FemtoDst", "FemtoDst" );
 		_wEvent.createBranch( tree, "Event" );
 		_wTrack.createBranch( tree, "Tracks" );
-		// _wMtdPid.createBranch( tree, "MtdPidTraits" );
+		_wMtdPid.createBranch( tree, "MtdPidTraits" );
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
 		_wHelix.createBranch( tree, "Helices" );
 
@@ -148,6 +148,11 @@ protected:
 		_event.mGRefMult = event->grefMult();
 		_event.mBin16 = rmc->getCentralityBin16();
 		_event.mWeight = rmc->getWeight();
+
+		for ( auto t : event->triggerIds()  ){
+
+			LOG_F( INFO, "Trigger ID: %lu", t );
+		}
 
 		_wEvent.set( _event );
 
