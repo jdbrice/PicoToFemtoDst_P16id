@@ -138,6 +138,10 @@ protected:
 
 		if ( false == keepEvent( event ) )
 			return;
+		_event.mTriggerWord = makeTriggerWord( event );
+		// don't save events that don't fire any of out triggers
+		if ( 0 == _event.mTriggerWord )
+			return;
 
 		auto vtx = event->primaryVertex();
 
@@ -148,7 +152,6 @@ protected:
 		_event.mRunId    = event->runId();
 		_event.mRunIndex = rmf.indexForRun( _event.mRunId );
 		_event.mEventId  = event->eventId();
-		_event.mTriggerWord = makeTriggerWord( event );
 		_event.mGRefMult = event->grefMult();
 		_event.mBin16 = rmc->getCentralityBin16();
 		_event.mWeight = rmc->getWeight();
@@ -344,18 +347,14 @@ protected:
 				//VPD-ZDC-novtx-mon
 				word |= (1 << 7); 
 			}
-			else {
-
-				LOG_F( 2, "Trigger skipped: %lu", t);
-			}
 		}
 
 
-		if ( 0 == word ){
-			for ( auto t : event->triggerIds()  ){
-				LOG_F( 2, "Trigger skipped: %lu", t );
-			}
-		}
+		// if ( 0 == word ){
+		// 	for ( auto t : event->triggerIds()  ){
+		// 		LOG_F( 2, "Trigger skipped: %lu", t );
+		// 	}
+		// }
 
 
 		return word;
