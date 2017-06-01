@@ -57,7 +57,7 @@ public:
 		tree = new TTree( "FemtoDst", "FemtoDst" );
 		_wEvent.createBranch( tree, "Event" );
 		_wTrack.createBranch( tree, "Tracks" );
-		// _wMtdPid.createBranch( tree, "MtdPidTraits" );
+		_wMtdPid.createBranch( tree, "MtdPidTraits" );
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
 		_wHelix.createBranch( tree, "Helices" );
 
@@ -170,10 +170,10 @@ protected:
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
-				// if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
-				// 	_wMtdPid.add( _mtdPid );
-				// 	nMtdTracks++;
-				// }
+				if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
+					_wMtdPid.add( _mtdPid );
+					nMtdTracks++;
+				}
 
 				if ( _track.mBTofPidTraitsIndex >= 0 ){
 					nBTofTracks++;
