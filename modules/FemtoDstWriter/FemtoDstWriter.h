@@ -217,9 +217,9 @@ protected:
 
 		fillTrackHelix( i, track, dca_full_prec );
 
-		// if ( track->mtdPidTraitsIndex() >= 0 ){
-		// 	fillMtdPid( i, track );
-		// }
+		if ( track->mtdPidTraitsIndex() >= 0 ){
+			fillMtdPid( i, track );
+		}
 
 		if ( track->bTofPidTraitsIndex() >= 0 ){
 			fillBTofPid( i, track );
