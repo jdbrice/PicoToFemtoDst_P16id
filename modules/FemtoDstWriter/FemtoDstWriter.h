@@ -57,7 +57,7 @@ public:
 		tree = new TTree( "FemtoDst", "FemtoDst" );
 		_wEvent.createBranch( tree, "Event" );
 		_wTrack.createBranch( tree, "Tracks" );
-		_wMtdPid.createBranch( tree, "MtdPidTraits" );
+		// _wMtdPid.createBranch( tree, "MtdPidTraits" );
 		_wBTofPid.createBranch( tree, "BTofPidTraits" );
 		_wHelix.createBranch( tree, "Helices" );
 
@@ -152,7 +152,7 @@ protected:
 		_wEvent.set( _event );
 
 		_wTrack.reset();
-		_wMtdPid.reset();
+		// _wMtdPid.reset();
 		_wBTofPid.reset();
 		_wHelix.reset();
 		size_t nTracks = _rTrack.N();
@@ -170,10 +170,10 @@ protected:
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
-				if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
-					_wMtdPid.add( _mtdPid );
-					nMtdTracks++;
-				}
+				// if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
+				// 	_wMtdPid.add( _mtdPid );
+				// 	nMtdTracks++;
+				// }
 
 				if ( _track.mBTofPidTraitsIndex >= 0 ){
 					nBTofTracks++;
@@ -217,9 +217,9 @@ protected:
 
 		fillTrackHelix( i, track, dca_full_prec );
 
-		if ( track->mtdPidTraitsIndex() >= 0 ){
-			fillMtdPid( i, track );
-		}
+		// if ( track->mtdPidTraitsIndex() >= 0 ){
+		// 	fillMtdPid( i, track );
+		// }
 
 		if ( track->bTofPidTraitsIndex() >= 0 ){
 			fillBTofPid( i, track );
