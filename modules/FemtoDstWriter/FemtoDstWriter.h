@@ -345,10 +345,17 @@ protected:
 				word |= (1 << 7); 
 			}
 			else {
+
 				LOG_F( 2, "Trigger skipped: %lu", t);
 			}
 		}
 
+
+		if ( 0 == word ){
+			for ( auto t : event->triggerIds()  ){
+				LOG_F( 2, "Trigger skipped: %lu", t );
+			}
+		}
 
 
 		return word;
