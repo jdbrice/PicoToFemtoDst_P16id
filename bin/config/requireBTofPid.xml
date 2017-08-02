@@ -7,11 +7,11 @@
 
 		<Require mtd="false" btof="true" rmc="P16id" />
 		<input>
-			<dst treeName="PicoDst" url="./list.lis" splitBy="20" maxFiles="-1" nEvents="-1"/>
+			<dst treeName="PicoDst" url="./list.lis" splitBy="50" maxFiles="-1" nEvents="-1"/>
 		</input>
 
 		<output>
-			<TFile url="FemotDst_btof_{index}.root" />
+			<TFile url="FemotDst_btof_and_mtd_{rid}_{index}.root" />
 		</output>
 
 		<histograms>

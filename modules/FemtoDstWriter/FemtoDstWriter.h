@@ -20,6 +20,7 @@
 
 #include "TTree.h"
 #include "TAxis.h"
+#include "Compression.h"
 
 #include <set>
 
@@ -57,6 +58,9 @@ public:
 	virtual void initialize(){
 		PicoDstSkimmer::initialize();
 
+		TFile * f = book->getOutputFile();
+		f->SetCompressionLevel( 9 );
+
 		book->cd();
 		tree = new TTree( "FemtoDst", "FemtoDst" );
 		_wEvent.createBranch( tree, "Event" );
@@ -81,6 +85,8 @@ public:
 		require_mtdPid = config.getBool( nodePath + ".Require:mtd", false );
 		require_btofPid = config.getBool( nodePath + ".Require:btof", false );
 		max_pT = config.getDouble( nodePath + ".Require:max_pT", max_pT );
+
+		
 
 	}
 protected:	
@@ -138,8 +144,18 @@ protected:
 
 		if ( false == keepEvent( event ) )
 			return;
+
+		// if ( rmc->getCentralityBin16() > 7 ) 
+		// 	return;
+
+		if ( _rMtdPid.N() <= 0 )
+			return;
+		
+		
+
+
 		_event.mTriggerWord = makeTriggerWord( event );
-		// don't save events that don't fire any of out triggers
+		// don't save events that don't fire any of our triggers
 		if ( 0 == _event.mTriggerWord )
 			return;
 
@@ -156,11 +172,6 @@ protected:
 		_event.mBin16 = rmc->getCentralityBin16();
 		_event.mWeight = rmc->getWeight();
 
-		// for ( auto t : event->triggerIds()  ){
-
-		// 	// LOG_F( INFO, "Trigger ID: %lu", t );
-		// 	triggerIds.insert( t );
-		// }
 
 		_wEvent.set( _event );
 
@@ -171,19 +182,24 @@ protected:
 		size_t nTracks = _rTrack.N();
 		size_t nMtdTracks = 0;
 		size_t nBTofTracks = 0;
+		size_t nTracksKeep = 0;
 		for ( size_t i = 0; i < nTracks; i++ ){
 			StPicoTrack * track = _rTrack.get( i );
 
-			fillTrack( nMtdTracks, track, event );
+			fillTrack( nTracksKeep, track, event );
 			if ( fabs(_track.mPt) > 0.01 && fabs(_track.mPt) < max_pT ){
 				
 
 				if ( require_mtdPid  && _track.mMtdPidTraitsIndex < 0 ) continue;
 				if ( require_btofPid && _track.mBTofPidTraitsIndex < 0 ) {continue;}
+				if ( track->pMom().mag() > 0.4 && _track.mMtdPidTraitsIndex < 0 ) continue;
+
+				nTracksKeep++;
 
 				_wTrack.add( _track );
 				_wHelix.add( _helix );
-				if ( _track.mMtdPidTraitsIndex >= 0 && require_mtdPid){
+
+				if ( _track.mMtdPidTraitsIndex >= 0 ){
 					_wMtdPid.add( _mtdPid );
 					nMtdTracks++;
 				}
@@ -200,7 +216,8 @@ protected:
 		if ( nMtdTracks >= 2 )
 			book->fill( "events", "gte2_mtd" );
 
-		tree->Fill();
+		if ( nMtdTracks >= 1 )
+			tree->Fill();
 	}
 
 	virtual void fillTrack( size_t i, StPicoTrack *track, StPicoEvent *event ){
